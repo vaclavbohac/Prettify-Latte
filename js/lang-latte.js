@@ -24,7 +24,6 @@ PR.registerLangHandler(
 		[],
 		[
 			['lang-in.tag',  /^(<\/?[a-z][^<>]*>)/i],
-			//['lang-html', /<([a-z][a-z0-9]*)\b[^>]*>/i],
 			[PR.PR_COMMENT, /^\{(?=\*)[\s\S]+\*\}/],
 			['opn', /\{(?!\*)\/{0,1}/],
 			['clo', /\}/],
