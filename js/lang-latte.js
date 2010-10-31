@@ -21,15 +21,16 @@
  */
 PR.registerLangHandler(
 	PR.createSimpleLexer(
-		[],
 		[
-			['lang-in.tag',  /^(<\/?[a-z][^<>]*>)/i],
+		],
+		[
+			['lang-latte-n-attributes',  /^(<\/?[a-z][^<>]*>)/i],
 			[PR.PR_COMMENT, /^\{(?=\*)[\s\S]+\*\}/],
-			['opn', /\{(?!\*)\/{0,1}/],
+			['opn', /\{(?![\*\"\'\s])\/{0,1}/],
 			['clo', /\}/],
 			['lang-latte-array-literal', /^\[(.*)\]/],
 			[PR.PR_STRING, /^[\"\'].*[\"\']/i],
-			[PR.PR_LITERAL, /^\x24(?=[a-z])[a-z]+/i, null],			
+			[PR.PR_LITERAL, /^\x24(?=[a-z])[a-z]+/i],			
 			[PR.PR_KEYWORD, /^(?:as|if(?:set|Current)?|elseifset|elseif|else|var|default|first|last|sep|debugbreak|dump|capture|cache|layout|extends|contentType|status|link|plink|block|include|widget|control|snippet|foreach|for)/]
 		]
 	),
@@ -48,4 +49,33 @@ PR.registerLangHandler(
 		]
 	),
 	['latte-array-literal']
+);
+
+
+// Match special Latte n: attribute syntax. 
+PR.registerLangHandler(
+	PR.createSimpleLexer(
+		[],
+		[
+			['lang-latte-n-keywords', /^n:([a-z]+)/],
+			['opn', /\{(?![\*\"\'])/],
+			['clo', /\}/],
+			[PR.PR_LITERAL, /^\x24(?=[a-z])[a-z]+/i],
+			['lang-in.tag', /^([<a-z0-9\"\':\/\.\=]+)/i],
+			[PR.PR_TAG, /^>/]
+		]
+	),
+	['latte-n-attributes']
+);
+
+
+// Match keyword tag names in Latte n: attributes.
+PR.registerLangHandler(
+	PR.createSimpleLexer(
+		[],
+		[
+			[PR.PR_KEYWORD, /^(?:if|ifset|foreach|first|sep|last|class|href)/]
+		]
+	),
+	['latte-n-keywords']
 );
