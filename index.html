@@ -18,9 +18,9 @@
  *}
 {block content}
 
-	{default $name => "My Awesome Store"}
+	{default $name => &quot;My Awesome Store&quot;}
 	
-	&lt;h1 class="headline"&gt;{$name}&lt;/h1&gt;
+	&lt;h1 class=&quot;headline&quot;&gt;{$name}&lt;/h1&gt;
 	
 	{foreach $products as $product}
 		
@@ -33,7 +33,13 @@
 	{/foreach}
 	
 	{control cartControl:small, $maxItems}
-	
+
+	&lt;ul&gt;
+	{foreach [3.141592, Hey, &#039;Hello&#039;, &quot;World&quot;] as $id}
+		&lt;li class=&quot;item-{$id}&quot;&gt;{$id}&lt;/li&gt;
+	{/foreach
+	&lt;/ul&gt;
+
 {/block}
 </pre></code>
 

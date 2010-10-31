@@ -27,10 +27,25 @@ PR.registerLangHandler(
 			[PR.PR_COMMENT, /^\{(?=\*)[\s\S]+\*\}/],
 			['opn', /\{(?!\*)\/{0,1}/],
 			['clo', /\}/],
+			['lang-latte-array-literal', /^\[(.*)\]/],
 			[PR.PR_STRING, /^[\"\'].*[\"\']/i],
 			[PR.PR_LITERAL, /^\x24(?=[a-z])[a-z]+/i, null],			
 			[PR.PR_KEYWORD, /^(?:as|if(?:set|Current)?|elseifset|elseif|else|var|default|first|last|sep|debugbreak|dump|capture|cache|layout|extends|contentType|status|link|plink|block|include|widget|control|snippet|foreach|for)/]
 		]
 	),
 	['latte']
+);
+
+// Match numbers and strings in array literal.
+PR.registerLangHandler(
+	PR.createSimpleLexer(
+		[],
+		[
+			[PR.PR_LITERAL, /^(?:\d+|\d*.\d+)/i],
+			[PR.PR_STRING, /^[\'][^\']*[\']/i],
+			[PR.PR_STRING, /^[\"][^\"]*[\"]/i],
+			[PR.PR_STRING, /^[a-z]+/i]
+		]
+	),
+	['latte-array-literal']
 );
